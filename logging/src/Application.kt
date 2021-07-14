@@ -1,10 +1,10 @@
 package dev.hirooka
 
 import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.request.*
-import io.ktor.routing.*
+import io.ktor.features.*
 import io.ktor.http.*
+import io.ktor.response.*
+import io.ktor.routing.*
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -13,8 +13,11 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 fun Application.module(testing: Boolean = false) {
     routing {
         get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
+            call.application.environment.log.info("hello")
+            throw RuntimeException("hello")
+            //call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
         }
     }
+    install(CallLogging)
 }
 
